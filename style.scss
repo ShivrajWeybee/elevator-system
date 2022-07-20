@@ -35,6 +35,7 @@ hr {
     position: relative;
     .lift {
         position: absolute;
+        bottom: 0px;
         height: 100px;
         width: 80px;
         background-color: #BBE1FA;
@@ -102,15 +103,13 @@ hr {
     height: 20px;
     width: 20px;
     left: 5px;
-    bottom: 0.25em;
+    bottom: 0.23em;
     background-color: white;
     transition: .2s;
 }
 input:checked + .slider {
-    background-color: #2992be;
-}
-input:focus + .slider {
-    box-shadow: 0 0 1px #2992be;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 5%, rgba(29,117,253,1) 38%, rgba(69,220,252,1) 68%, rgba(47,201,127,1) 90%);
 }
 input:checked + .slider:before {
     transform: translateX(30px);
@@ -140,10 +139,9 @@ input:checked + .slider:before {
         height: 15px;
     }
 }
-.ud:hover {
-    border: 1px solid #3EC70B;
-    color: #3EC70B;
-}
+// .ud:hover {
+//     border: 1px solid #3EC70B;
+// }
 .txt {
     color: #BBE1FA;
     font-size: large;
