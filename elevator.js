@@ -3,9 +3,9 @@
 const allLifts = document.querySelector(`.all-lifts`);
 const upDownBtns  = document.querySelector(`.upDownBtns `);
 
-// let floors = prompt("How many floors in your Building");
-let floors = 10;
-const noOfLifts = 3;
+let floors = prompt("How many floors in your Building");
+// let floors = 5;
+const noOfLifts = floors/2;
 let floorsArr = [];
 let workingLifts;
 let numberOfWorkingLifts;
