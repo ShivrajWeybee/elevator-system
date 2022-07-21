@@ -147,43 +147,34 @@ function whichLiftToMove(a,height,requestedFloor) {
         liftObj[1].liftPosition = requestedFloor;
         document.querySelector(`#lift-pos-${2}`).textContent = requestedFloor;
         isFirstFloor = false;
+        console.log("case: 1");
     }
     else if(liftObj[1].isMaintenance && isFirstFloor) {
         document.querySelector(`#lift-${workingLifts[randomLift-1].liftNumber}`).style.bottom = `${height}px`;
         workingLifts[randomLift-1].liftPosition = requestedFloor;
         document.querySelector(`#lift-pos-${workingLifts[randomLift-1].liftNumber}`).textContent = requestedFloor;
+        console.log("case: 2");
     }
     else if(numberOfWorkingLifts === 1) {
             const v = workingLifts[0].liftNumber;
             document.querySelector(`#lift-${v}`).style.bottom = `${height}px`;
             workingLifts[0].liftPosition = requestedFloor;
             document.querySelector(`#lift-pos-${v}`).textContent = requestedFloor;
+            console.log("case: 3");
     }
     else {
-        // let movableLift = workingLifts.reduce(function (prev, curr) {
-        //     return Math.abs(curr.liftPosition - requestedFloor) < Math.abs(prev.liftPosition - requestedFloor) ? curr : prev;
-        // });
-
-        let rlif = [];
-        let distance = liftObj.map( lif => Math.abs(requestedFloor - lif.liftPosition));
-        console.log(distance);
-        let minDistance = Math.min(...distance);
-        console.log(minDistance);
-        distance.forEach((ds, i, arr)=> {
-            if(minDistance == ds){
-                rlif.push(i);
-            }
+        console.log("case: 4");
+        let movableLift = workingLifts.reduce(function (prev, curr) {
+            return Math.abs(curr.liftPosition - requestedFloor) < Math.abs(prev.liftPosition - requestedFloor) ? curr : prev;
         });
-        console.log(rlif);
-        let item = rlif[Math.floor(Math.random()*rlif.length)];
-        console.log(item);
+        console.log(movableLift);
 
-        // let whichLiftToMove = movableLift.liftNumber;
-        document.querySelector(`#lift-${item+1}`).style.bottom = `${height}px`;
+        let whichLiftToMove = movableLift.liftNumber;
+        document.querySelector(`#lift-${whichLiftToMove}`).style.bottom = `${height}px`;
         let sr = workingLifts.findIndex(i => {
-            return i.liftId === `lift-${item+1}`;
-        })
+            return i.liftId === `lift-${whichLiftToMove}`;
+        });
         workingLifts[sr].liftPosition = requestedFloor;
-        document.querySelector(`#lift-pos-${item+1}`).textContent = requestedFloor;
+        document.querySelector(`#lift-pos-${whichLiftToMove}`).textContent = requestedFloor;
     }
 }
