@@ -14,7 +14,6 @@ hr {
   margin: 1em 0;
   border: none;
   border-bottom: 0.05em solid rgba(71, 71, 71, 0.274);
-  color: rgb(153, 153, 153);
 }
 
 .flex {
@@ -44,9 +43,10 @@ hr {
   height: 100px;
   width: 80px;
   background-color: #BBE1FA;
+  transition: 1.5s all;
 }
 .div .lift p {
-  background-color: #2992be;
+  background-color: #0F4C75;
   font-weight: bold;
   font-size: larger;
   text-align: center;
@@ -76,6 +76,19 @@ hr {
   width: 130px;
   background-color: #0F4C75;
   position: relative;
+}
+
+.numbers {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  flex-direction: column;
+}
+.numbers p {
+  font-size: larger;
+  font-weight: bold;
+  min-height: 100px;
+  color: #0F4C75;
 }
 
 .switch {
@@ -152,4 +165,8 @@ input:checked + .slider:before {
 .txt {
   color: #BBE1FA;
   font-size: large;
+}
+
+.hidden {
+  visibility: hidden;
 }/*# sourceMappingURL=style.css.map */

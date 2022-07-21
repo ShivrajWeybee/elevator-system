@@ -16,16 +16,22 @@
     <div class="container flex">
         <div class="all-lifts flex">
             <!-- <div class="div">
-                <div class="lift-block flex">
-                    <div class="lift">
-                        <p class="lift-num">1</p>
+                <div class="lift-block flex" id="block-${l}">
+                    <div class="numbers flex">
+                        <p>5</p>
+                        <p>4</p>
+                        <p>3</p>
+                        <p>2</p>
+                        <p>1</p>
+                    </div>
+                    <div class="lift" id="lift-${l}">
                     </div>
                 </div>
-                <label class="switch">
-                    <input type="checkbox" name="cb" id="check-${l}" onchange="up()">
-                    <span class="slider round" id="span-${l}"></span>
-                </label>
-            </div> -->
+                 <label class="switch">
+                     <input type="checkbox" name="cb" id="check-${l}" onclick="up(event)">
+                     <span class="slider round" id="span-${l}"></span>
+                 </label>
+             </div> -->
         </div>
         <div class="all-controls">
             <div class="upDownBtns flex">
@@ -58,6 +64,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="elevator.js"></script>
 </body>
 </html>
