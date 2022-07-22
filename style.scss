@@ -18,6 +18,10 @@ body {
     font-family: 'Quicksand', sans-serif;
     margin: 0 2em;
 }
+h1 {
+    margin-top: 0.5em;
+    text-align: center;
+}
 hr {
     margin: 1em 0;
     border: none;
@@ -29,11 +33,10 @@ hr {
     align-items: center;
 }
 .container {
-    align-items: stretch;
     justify-content: none;
-    padding: 2em;
-    border-radius: 1em;
-    background-color: $background-color;
+    align-items: stretch;
+    width: 100%;
+    margin-bottom: 5em;
 }
 .div{
     display: flex;
@@ -157,7 +160,7 @@ input:checked + .slider:before {
         height: 15px;
     }
 }
-.abc:hover {
+.ud-btn:hover {
     border: 1px solid $border-hover-color;
 }
 .txt {
@@ -166,4 +169,13 @@ input:checked + .slider:before {
 }
 .hidden {
     visibility: hidden;
+}
+.lift-formula {
+    color: $lift-color;
+}
+.wrapper {
+    flex-direction: column;
+    background-color: $background-color;
+    padding: 2em;
+    border-radius: 1em;
 }
