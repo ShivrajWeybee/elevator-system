@@ -1,13 +1,11 @@
 `use strict`;
 
-const allLifts = document.querySelector(`.all-lifts`);
-const upDownBtns  = document.querySelector(`.upDownBtns `);
-
+// asking user for number of lifts & user must have to enter number of Lifts <OR> user can not move on
 do {
     floors = prompt("How many floors in your Building");
 }while(floors == null || floors == "" || floors == 0);
 
-// let floors = 5;
+// ------------------------------ Variable Declaration ------------------------------
 const noOfLifts = floors/2;
 let floorsArr = [];
 let workingLifts;
@@ -15,8 +13,12 @@ let numberOfWorkingLifts;
 let intoMaintenance = [];
 let isFirstFloor = false;
 let l = 1;
+const upDownBtns  = document.querySelector(`.up-down-btns`);
+const allLifts = document.querySelector(`.all-lifts`);
 
-// --------------- HTML for One Lift Block ---------------
+
+
+// ------------------------------ HTML for One Lift Block ------------------------------
 function insertNewBlock() {
     const html =`
     <div class="div">
@@ -38,7 +40,7 @@ function insertNewBlock() {
 }
 
 
-// --------------- Insert Lifts Dynamically ---------------
+// ------------------------------ Insert Lifts Dynamically ------------------------------
 for(let i=0; i<noOfLifts; i++) {
     insertNewBlock();
     const numbers = document.querySelector(`#numbers-${l}`);
@@ -52,35 +54,35 @@ for(let i=0; i<noOfLifts; i++) {
 }
 
 
-// --------------- Check for Maintenance ---------------
+// ------------------------------ Check for Maintenance ------------------------------
 // Check -> into Maintenance
 // Uncheck -> Working
 function checkForMaintenance(event) {
-    const a = event.target.id.split('-')[1];
-    const cBox = document.querySelector(`#check-${a}`);
-    const liftBox = document.querySelector(`#lift-${a}`);
+    const idNumber = event.target.id.split('-')[1];
+    const cBox = document.querySelector(`#check-${idNumber}`);
+    const liftBox = document.querySelector(`#lift-${idNumber}`);
     if(cBox.checked) {
         liftBox.style.bottom = "0px";
         liftBox.style.border = "1px solid red";
 
         intoMaintenance.push(liftBox.id);
 
-        liftObj[a-1].liftPosition = "1";
-        liftObj[a-1].isMaintenance = true;
+        liftObj[idNumber-1].liftPosition = "1";
+        liftObj[idNumber-1].isMaintenance = true;
     }
     else if(!cBox.checked) {
         liftBox.classList.add("lift-tempo");
         liftBox.style.border = "none";
 
-        const popElement = intoMaintenance.indexOf(document.querySelector(`#lift-${a}`).id);
+        const popElement = intoMaintenance.indexOf(document.querySelector(`#lift-${idNumber}`).id);
         intoMaintenance.splice(popElement, 1);
-        liftObj[a-1].isMaintenance = false;
+        liftObj[idNumber-1].isMaintenance = false;
          
     }
 }
 
 
-// --------------- Add lift Controls OR Buttons ---------------
+// ------------------------------ Add lift Controls OR Buttons ------------------------------
 for(let i = 1; i<=floors; i++) {
     if(i===1) {
         floorsArr.push(`
@@ -112,18 +114,18 @@ for(let i = 1; i<=floors; i++) {
 floorsArr.forEach(i => upDownBtns.insertAdjacentHTML("afterBegin", i));
 
 
-// --------------- Move Lift to the Requested Floor ---------------
+// ------------------------------ Move Lift to the Requested Floor ------------------------------
 const lifts = document.querySelectorAll(`.lift`);
 let liftObj = [];
 
 lifts.forEach(i => {
-    const ab = {
+    const obj = {
         liftNumber: i.id.split('-')[1],
         liftId: i.id,
         liftPosition: i.querySelector(`.lift-pos`).textContent,
         isMaintenance: false,
     }
-    liftObj.push(ab);
+    liftObj.push(obj);
 })
 
 function moveLift(a) {
@@ -154,35 +156,13 @@ function whichLiftToMove(a,height,requestedFloor) {
 
     if(!liftObj[1].isMaintenance && isFirstFloor) {
         document.querySelector(`#lift-${2}`).style.bottom = `${height}px`;
-
         document.querySelector(`#lift-${2}`).style.transition = `${Math.abs(liftObj[1].liftPosition - requestedFloor)/2}s linear`;
-
         liftObj[1].liftPosition = requestedFloor;
-
         document.querySelector(`#lift-pos-${2}`).textContent = requestedFloor;
 
         isFirstFloor = false;
     }
-    else if(liftObj[1].isMaintenance && isFirstFloor) {
-        document.querySelector(`#lift-${workingLifts[randomLift-1].liftNumber}`).style.bottom = `${height}px`;
-
-        document.querySelector(`#lift-${workingLifts[randomLift-1].liftNumber}`).style.transition = `${Math.abs(workingLifts[randomLift-1].liftPosition - requestedFloor)/2}s linear`;
-
-        workingLifts[randomLift-1].liftPosition = requestedFloor;
-
-        document.querySelector(`#lift-pos-${workingLifts[randomLift-1].liftNumber}`).textContent = requestedFloor;
-    }
-    else if(numberOfWorkingLifts === 1) {
-            const v = workingLifts[0].liftNumber;
-            document.querySelector(`#lift-${v}`).style.bottom = `${height}px`;
-
-            document.querySelector(`#lift-${v}`).style.transition = `${Math.abs(workingLifts[0].liftPosition - requestedFloor)/2}s linear`;
-
-            workingLifts[0].liftPosition = requestedFloor;
-            document.querySelector(`#lift-pos-${v}`).textContent = requestedFloor;
-    }
     else {
-
         let minimum = Math.min(...workingLifts.map(i => Math.abs(i.liftPosition - requestedFloor)));
         let fArr = [];
         workingLifts.forEach(i=> {
@@ -191,15 +171,10 @@ function whichLiftToMove(a,height,requestedFloor) {
             }
         });
         let liftThatWillMove = fArr[Math.floor(Math.random()*fArr.length)].liftNumber;
-
         document.querySelector(`#lift-${liftThatWillMove}`).style.bottom = `${height}px`;
-
         let a = workingLifts.findIndex(x => x.liftId === `lift-${liftThatWillMove}`);
-
         document.querySelector(`#lift-${liftThatWillMove}`).style.transition = `${Math.abs(workingLifts[a].liftPosition - requestedFloor)/2}s linear`;
-            
         workingLifts[a].liftPosition = requestedFloor;
-
         document.querySelector(`#lift-pos-${liftThatWillMove}`).textContent = requestedFloor;
     }
 }
