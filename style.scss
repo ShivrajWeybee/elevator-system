@@ -3,10 +3,11 @@
 $background-color: #1B262C;
 $liftBlock-color: #0F4C75;
 $lift-color: #BBE1FA;
-$hr: rgba(71, 71, 71, 0.274);
-$inMaintenance: red;
-$toggle-off: grey;
-$toggle-circle: white;
+$hr: #47474746;
+$inMaintenance: #ff0000;
+$toggle-off: #808080;
+$toggle-circle: #ffffff;
+$border-hover-color: #51dd51;
 
 * {
     margin: 0;
@@ -151,9 +152,13 @@ input:checked + .slider:before {
     color: $lift-color;
     border: 1px solid $lift-color;
     border-radius: 50%;
+    cursor: pointer;
     img {
         height: 15px;
     }
+}
+.abc:hover {
+    border: 1px solid $border-hover-color;
 }
 .txt {
     color: $lift-color;
