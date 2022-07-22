@@ -76,7 +76,7 @@ for(let i = 1; i<=floors; i++) {
         floorsArr.push(`
         <div class="btns flex">
             <p class="abc">${i}</p>
-            <p class="abc ud" id="up-${i}" onclick="abc(this.id)"><img src="imcaret-arrow-up.png" alt=""></p>
+            <p class="abc ud" id="up-${i}" onclick="abc(this.id)"><img src="caret-arrow-up.png" alt=""></p>
         </div>
         `)
     }
