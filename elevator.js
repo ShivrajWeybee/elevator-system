@@ -76,10 +76,9 @@ for(let i = 1; i<=floors; i++) {
         floorsArr.push(`
         <div class="btns flex">
             <p class="abc">${i}</p>
-            <p class="abc ud" id="up-${i}" onclick="abc(this.id)"><img src="caret-arrow-up.png" alt=""></p>
+            <p class="abc ud" id="up-${i}" onclick="abc(this.id)"><img src="imcaret-arrow-up.png" alt=""></p>
         </div>
         `)
-        console.log({i});
     }
     else if(i==floors) {
         floorsArr.push(`
@@ -88,7 +87,6 @@ for(let i = 1; i<=floors; i++) {
             <p class="abc ud" id="down-${i}" onclick="abc(this.id)"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
-        console.log({i});
     }
     else {
         floorsArr.push(`
@@ -99,7 +97,6 @@ for(let i = 1; i<=floors; i++) {
             <p class="abc ud" onclick="abc(this.id)" id="down-${i}"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
-        console.log({i});
     }
 }
 floorsArr.forEach(i => upDownBtns.insertAdjacentHTML("afterBegin", i));
@@ -144,37 +141,53 @@ function whichLiftToMove(a,height,requestedFloor) {
 
     if(!liftObj[1].isMaintenance && isFirstFloor) {
         document.querySelector(`#lift-${2}`).style.bottom = `${height}px`;
+
+        document.querySelector(`#lift-${2}`).style.transition = `${Math.abs(liftObj[1].liftPosition - requestedFloor)/2}s linear`;
+
         liftObj[1].liftPosition = requestedFloor;
+
         document.querySelector(`#lift-pos-${2}`).textContent = requestedFloor;
+
         isFirstFloor = false;
-        console.log("case: 1");
     }
     else if(liftObj[1].isMaintenance && isFirstFloor) {
         document.querySelector(`#lift-${workingLifts[randomLift-1].liftNumber}`).style.bottom = `${height}px`;
+
+        document.querySelector(`#lift-${workingLifts[randomLift-1].liftNumber}`).style.transition = `${Math.abs(workingLifts[randomLift-1].liftPosition - requestedFloor)/2}s linear`;
+
         workingLifts[randomLift-1].liftPosition = requestedFloor;
+
         document.querySelector(`#lift-pos-${workingLifts[randomLift-1].liftNumber}`).textContent = requestedFloor;
-        console.log("case: 2");
     }
     else if(numberOfWorkingLifts === 1) {
             const v = workingLifts[0].liftNumber;
             document.querySelector(`#lift-${v}`).style.bottom = `${height}px`;
+
+            document.querySelector(`#lift-${v}`).style.transition = `${Math.abs(workingLifts[0].liftPosition - requestedFloor)/2}s linear`;
+
             workingLifts[0].liftPosition = requestedFloor;
             document.querySelector(`#lift-pos-${v}`).textContent = requestedFloor;
-            console.log("case: 3");
     }
     else {
-        console.log("case: 4");
-        let movableLift = workingLifts.reduce(function (prev, curr) {
-            return Math.abs(curr.liftPosition - requestedFloor) < Math.abs(prev.liftPosition - requestedFloor) ? curr : prev;
-        });
-        console.log(movableLift);
 
-        let whichLiftToMove = movableLift.liftNumber;
-        document.querySelector(`#lift-${whichLiftToMove}`).style.bottom = `${height}px`;
-        let sr = workingLifts.findIndex(i => {
-            return i.liftId === `lift-${whichLiftToMove}`;
+        let minimum = Math.min(...workingLifts.map(i => Math.abs(i.liftPosition - requestedFloor)));
+        let fArr = [];
+        workingLifts.forEach(i=> {
+            if(Math.abs(i.liftPosition - requestedFloor) == minimum) {
+                fArr.push(i);
+            }
         });
-        workingLifts[sr].liftPosition = requestedFloor;
-        document.querySelector(`#lift-pos-${whichLiftToMove}`).textContent = requestedFloor;
+        let liftThatWillMove = fArr[Math.floor(Math.random()*fArr.length)].liftNumber;
+
+        document.querySelector(`#lift-${liftThatWillMove}`).style.bottom = `${height}px`;
+
+        let a = workingLifts.findIndex(x => x.liftId === `lift-${liftThatWillMove}`);
+            
+        document.querySelector(`#lift-${liftThatWillMove}`).style.transition = `${Math.abs(workingLifts[a].liftPosition - requestedFloor)/2}s linear`;
+            
+        workingLifts[a].liftPosition = requestedFloor;
+
+        document.querySelector(`#lift-pos-${liftThatWillMove}`).textContent = requestedFloor;
+
     }
 }
