@@ -16,7 +16,7 @@ let intoMaintenance = [];
 let isFirstFloor = false;
 let l = 1;
 
-// --------------- Number Of Lifts ---------------
+// --------------- HTML for One Lift Block ---------------
 function insertNewBlock() {
     const html =`
     <div class="div">
@@ -28,7 +28,7 @@ function insertNewBlock() {
             </div>
         </div>
         <label class="switch">
-            <input type="checkbox" name="cb" id="check-${l}" onclick="up(event)">
+            <input type="checkbox" name="cb" id="check-${l}" onclick="checkForMaintenance(event)">
             <span class="slider round" id="span-${l}"></span>
         </label>
     </div>
@@ -36,6 +36,9 @@ function insertNewBlock() {
 
     allLifts.insertAdjacentHTML("beforeend", html);
 }
+
+
+// --------------- Insert Lifts Dynamically ---------------
 for(let i=0; i<noOfLifts; i++) {
     insertNewBlock();
     const numbers = document.querySelector(`#numbers-${l}`);
@@ -48,8 +51,11 @@ for(let i=0; i<noOfLifts; i++) {
     l++;
 }
 
-// --------------- Toggle Buttons ---------------
-function up(event) {
+
+// --------------- Check for Maintenance ---------------
+// Check -> into Maintenance
+// Uncheck -> Working
+function checkForMaintenance(event) {
     const a = event.target.id.split('-')[1];
     const cBox = document.querySelector(`#check-${a}`);
     const liftBox = document.querySelector(`#lift-${a}`);
@@ -73,31 +79,32 @@ function up(event) {
     }
 }
 
-// --------------- Number Of Floors ---------------
+
+// --------------- Add lift Controls OR Buttons ---------------
 for(let i = 1; i<=floors; i++) {
     if(i===1) {
         floorsArr.push(`
         <div class="btns flex">
-            <p class="abc">${i}</p>
-            <p class="abc ud-btn" id="up-${i}" onclick="abc(this.id)"><img src="caret-arrow-up.png" alt=""></p>
+            <p class="single-btn">${i}</p>
+            <p class="single-btn ud-btn" id="up-${i}" onclick="moveLift(this.id)"><img src="caret-arrow-up.png" alt=""></p>
         </div>
         `)
     }
     else if(i==floors) {
         floorsArr.push(`
         <div class="btns flex">
-            <p class="abc">${i}</p>
-            <p class="abc ud-btn" id="down-${i}" onclick="abc(this.id)"><img src="down-filled-triangular-arrow.png" alt=""></p>
+            <p class="single-btn">${i}</p>
+            <p class="single-btn ud-btn" id="down-${i}" onclick="moveLift(this.id)"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
     }
     else {
         floorsArr.push(`
         <div class="btns flex">
-            <p class="abc">${i}</p>
-            <p class="abc ud-btn" onclick="abc(this.id)" id="up-${i}"><img src="caret-arrow-up.png"alt="" id="up-${i}"></p>
+            <p class="single-btn">${i}</p>
+            <p class="single-btn ud-btn" onclick="moveLift(this.id)" id="up-${i}"><img src="caret-arrow-up.png"alt="" id="up-${i}"></p>
 
-            <p class="abc ud-btn" onclick="abc(this.id)" id="down-${i}"><img src="down-filled-triangular-arrow.png" alt=""></p>
+            <p class="single-btn ud-btn" onclick="moveLift(this.id)" id="down-${i}"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
     }
@@ -105,7 +112,7 @@ for(let i = 1; i<=floors; i++) {
 floorsArr.forEach(i => upDownBtns.insertAdjacentHTML("afterBegin", i));
 
 
-// --------------- Move Lift ---------------
+// --------------- Move Lift to the Requested Floor ---------------
 const lifts = document.querySelectorAll(`.lift`);
 let liftObj = [];
 
@@ -119,13 +126,14 @@ lifts.forEach(i => {
     liftObj.push(ab);
 })
 
-
-function abc(a) {
+function moveLift(a) {
     const requestedFloor = a.split('-')[1];
     const height = (a.split('-')[1]-1)*100;
     checkFirstFloor();
     whichLiftToMove(a,height,requestedFloor);
 }
+
+// Check wether all lift are at first floor
 function checkFirstFloor() {
     for(let i of liftObj) {
         if(i.liftPosition === '1') {
@@ -136,6 +144,8 @@ function checkFirstFloor() {
         }
     }
 }
+
+// Calculate that which lift should be move to requested floor
 function whichLiftToMove(a,height,requestedFloor) {
     let FirstPriorityLift = 2;
     workingLifts = liftObj.filter(i => i.isMaintenance == false);
@@ -185,7 +195,7 @@ function whichLiftToMove(a,height,requestedFloor) {
         document.querySelector(`#lift-${liftThatWillMove}`).style.bottom = `${height}px`;
 
         let a = workingLifts.findIndex(x => x.liftId === `lift-${liftThatWillMove}`);
-            
+
         document.querySelector(`#lift-${liftThatWillMove}`).style.transition = `${Math.abs(workingLifts[a].liftPosition - requestedFloor)/2}s linear`;
             
         workingLifts[a].liftPosition = requestedFloor;

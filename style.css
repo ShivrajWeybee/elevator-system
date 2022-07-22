@@ -151,7 +151,7 @@ input:checked + .slider:before {
   flex-direction: column;
 }
 
-.abc {
+.single-btn {
   font-size: 15px;
   height: 35px;
   width: 35px;
@@ -163,7 +163,7 @@ input:checked + .slider:before {
   border-radius: 50%;
   cursor: pointer;
 }
-.abc img {
+.single-btn img {
   height: 15px;
 }
 
