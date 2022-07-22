@@ -3,7 +3,10 @@
 const allLifts = document.querySelector(`.all-lifts`);
 const upDownBtns  = document.querySelector(`.upDownBtns `);
 
-let floors = prompt("How many floors in your Building");
+do {
+    floors = prompt("How many floors in your Building");
+}while(floors == null || floors == "" || floors == 0);
+
 // let floors = 5;
 const noOfLifts = floors/2;
 let floorsArr = [];
@@ -76,7 +79,7 @@ for(let i = 1; i<=floors; i++) {
         floorsArr.push(`
         <div class="btns flex">
             <p class="abc">${i}</p>
-            <p class="abc ud" id="up-${i}" onclick="abc(this.id)"><img src="caret-arrow-up.png" alt=""></p>
+            <p class="abc ud-btn" id="up-${i}" onclick="abc(this.id)"><img src="caret-arrow-up.png" alt=""></p>
         </div>
         `)
     }
@@ -84,7 +87,7 @@ for(let i = 1; i<=floors; i++) {
         floorsArr.push(`
         <div class="btns flex">
             <p class="abc">${i}</p>
-            <p class="abc ud" id="down-${i}" onclick="abc(this.id)"><img src="down-filled-triangular-arrow.png" alt=""></p>
+            <p class="abc ud-btn" id="down-${i}" onclick="abc(this.id)"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
     }
@@ -92,9 +95,9 @@ for(let i = 1; i<=floors; i++) {
         floorsArr.push(`
         <div class="btns flex">
             <p class="abc">${i}</p>
-            <p class="abc ud" onclick="abc(this.id)" id="up-${i}"><img src="caret-arrow-up.png"alt="" id="up-${i}"></p>
+            <p class="abc ud-btn" onclick="abc(this.id)" id="up-${i}"><img src="caret-arrow-up.png"alt="" id="up-${i}"></p>
 
-            <p class="abc ud" onclick="abc(this.id)" id="down-${i}"><img src="down-filled-triangular-arrow.png" alt=""></p>
+            <p class="abc ud-btn" onclick="abc(this.id)" id="down-${i}"><img src="down-filled-triangular-arrow.png" alt=""></p>
         </div>
         `)
     }
@@ -188,6 +191,5 @@ function whichLiftToMove(a,height,requestedFloor) {
         workingLifts[a].liftPosition = requestedFloor;
 
         document.querySelector(`#lift-pos-${liftThatWillMove}`).textContent = requestedFloor;
-
     }
 }
