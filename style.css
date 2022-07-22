@@ -13,7 +13,7 @@ body {
 hr {
   margin: 1em 0;
   border: none;
-  border-bottom: 0.05em solid rgba(71, 71, 71, 0.274);
+  border-bottom: 0.05em solid rgba(71, 71, 71, 0.2745098039);
 }
 
 .flex {
@@ -58,7 +58,7 @@ hr {
 .div .inMaintenance {
   position: absolute;
   bottom: 0px;
-  border: 1px solid red;
+  border: 1px solid #ff0000;
 }
 
 .btns {
@@ -111,7 +111,7 @@ hr {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: grey;
+  background-color: #808080;
   transition: 0.2s;
 }
 
@@ -122,7 +122,7 @@ hr {
   width: 20px;
   left: 5px;
   bottom: 0.23em;
-  background-color: white;
+  background-color: #ffffff;
   transition: 0.2s;
 }
 
@@ -157,9 +157,14 @@ input:checked + .slider:before {
   color: #BBE1FA;
   border: 1px solid #BBE1FA;
   border-radius: 50%;
+  cursor: pointer;
 }
 .abc img {
   height: 15px;
+}
+
+.abc:hover {
+  border: 1px solid #51dd51;
 }
 
 .txt {
